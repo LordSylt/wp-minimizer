@@ -1,0 +1,3 @@
+npm run dev // runs dev mode (fast building, unoptimized)
+
+npm run build // Builds final product
