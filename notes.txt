@@ -1,3 +1,7 @@
-npm run dev // runs dev mode (fast building, unoptimized)
+npm run dev     // runs dev mode (fast building, unoptimized)
+npm run build   // Builds final product
+npm run test    //Run test suite
 
-npm run build // Builds final product
+Tests must include .test. in filename
+
+Tailwindcss is in project, to use it: don't forget "@import 'tailwindcss';"
