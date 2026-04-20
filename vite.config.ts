@@ -9,7 +9,7 @@ export default defineConfig({
 		emptyOutDir: true,
 		manifest: true,
 		rollupOptions: {
-		  input: '/src/assets/main.tsx',
+		  input: '/src/main.tsx',
 		},
 	},
 })
