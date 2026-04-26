@@ -22,8 +22,8 @@
 function sidebar_plugin_register() {
     wp_register_script(
         'minimizer-sidebar',
-        plugins_url( 'dist/assets/main-rNOSJh8m.js ', __FILE__ ),
-        array( 'wp-plugins', 'wp-editor', 'react', 'wp-components' )
+        plugins_url( 'dist/assets/main.js', __FILE__ ),
+        array( 'wp-plugins', 'wp-edit-post', 'react', 'wp-components' )
     );
 }
 add_action( 'init', 'sidebar_plugin_register' );
