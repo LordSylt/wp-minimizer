@@ -1,8 +1,0 @@
-npm run dev     // runs dev mode (fast building, unoptimized)
-npm run build   // Builds final product
-npm run test    //Run test suite
-
-Tests must include .test. in filename
-
-Tailwindcss is in project, to use it: don't forget "@import 'tailwindcss';"
-Tailwind CSS Intellisense is a recommended extension 
