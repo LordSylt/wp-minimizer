@@ -1,0 +1,1 @@
+(function(e,t){var n=t.createElement,r=e.plugins.registerPlugin,i=e.editor.PluginSidebar;r(`my-plugin-sidebar`,{render:function(){return n(i,{name:`my-plugin-sidebar`,icon:`admin-post`,title:`My plugin sidebar`},`test1`)}})})(window.wp,window.React);

@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build":   "wp-scripts build",
-    "start":   "wp-scripts start",
-    "test":    "wp-scripts test-unit-js",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "test": "wp-scripts test-unit-js",
     "lint:js": "wp-scripts lint-js",
     "lint:css": "wp-scripts lint-style"
   },
