@@ -7,7 +7,7 @@ registerPlugin('my-plugin-sidebar', {
     render: () => (
         <PluginSidebar
             name="my-plugin-sidebar"
-            icon="admin-post"
+            icon="beer"
             title="My plugin sidebar"
         >
             <VerticalToggleButtons />
