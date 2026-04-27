@@ -12,6 +12,7 @@
  *
  * @package CreateBlock
  */
+const preset = 1;
 
 $slim = array(
 			'core/paragraph',
@@ -57,23 +58,18 @@ function sidebar_plugin_script_enqueue() {
 add_action( 'enqueue_block_editor_assets', 'sidebar_plugin_script_enqueue' );
 
 
-function wpdocs_allowed_block_types ( $block_editor_context, $editor_context ) {
-	if ( ! empty( $editor_context->post ) ) {
-		return array(
-			'core/paragraph',
-			'core/heading',
-			'core/list',
-			'core/table',
-			'core/image',
-			'core/file',
-			'core/video',
-			'core/accordion',
-			'core/buttons',
-			'core/site-logo',
-			'core/youtube-embed',
-		);
+function wpdocs_allowed_block_types($block_editor_context, $editor_context) {
+	global $slim, $medium;
+	if (! empty($editor_context->post)) {
+		switch (preset) {
+			case 0:
+				return $slim;
+			case 1:
+				return $medium;
+			default:
+				return $block_editor_context;
+		}
 	}
-
 	return $block_editor_context;
 }
 
