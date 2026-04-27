@@ -13,10 +13,33 @@
  * @package CreateBlock
  */
 
+$slim = array(
+			'core/paragraph',
+			'core/heading',
+			'core/list',
+			'core/table',
+			'core/image',
+			'core/file',
+			'core/video',
+			'core/accordion',
+			'core/buttons',
+            'core/site-logo',
+		);
 
+$medium = array(
+			'core/paragraph',
+			'core/heading',
+			'core/list',
+			'core/table',
+			'core/image',
+			'core/file',
+			'core/video',
+			'core/accordion',
+			'core/buttons',
+            'core/site-logo',
+		);
 
-//PHP handles backend logic and wordpress hooks
-
+$full = true;
 
 
 function sidebar_plugin_register() {
@@ -32,3 +55,26 @@ function sidebar_plugin_script_enqueue() {
     wp_enqueue_script( 'minimizer-sidebar' );
 }
 add_action( 'enqueue_block_editor_assets', 'sidebar_plugin_script_enqueue' );
+
+
+function wpdocs_allowed_block_types ( $block_editor_context, $editor_context ) {
+	if ( ! empty( $editor_context->post ) ) {
+		return array(
+			'core/paragraph',
+			'core/heading',
+			'core/list',
+			'core/table',
+			'core/image',
+			'core/file',
+			'core/video',
+			'core/accordion',
+			'core/buttons',
+			'core/site-logo',
+			'core/youtube-embed',
+		);
+	}
+
+	return $block_editor_context;
+}
+
+add_filter( 'allowed_block_types_all', 'wpdocs_allowed_block_types', 10, 2 );
