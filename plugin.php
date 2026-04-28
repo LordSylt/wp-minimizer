@@ -12,7 +12,6 @@
  *
  * @package CreateBlock
  */
-const preset = 1;
 
 $slim = array(
 			'core/paragraph',
@@ -54,18 +53,49 @@ add_action( 'init', 'sidebar_plugin_register' );
 
 function sidebar_plugin_script_enqueue() {
     wp_enqueue_script( 'minimizer-sidebar' );
+
+	wp_localize_script('minimizer-sidebar', 'myPluginData', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce'   => wp_create_nonce('wp_minimizer_nonce'),
+    ]);
 }
 add_action( 'enqueue_block_editor_assets', 'sidebar_plugin_script_enqueue' );
 
 
+#Adds an action hook to call from React, checks permissions then updates loaded preset
+add_action('wp_ajax_wp_minimizer_set_preset', function() {
+	check_ajax_referer('wp_minimizer_nonce', 'nonce');
+	if (!current_user_can('edit_posts')) {
+		wp_send_json_error('Unauthorized', 403);
+	}
+
+	$post_id = intval($_POST['post_id'] ?? 0);
+	$preset = sanitize_text_field($_POST['value'] ?? '');
+	if (!$post_id || !in_array($preset, ['slim', 'medium', 'full'], true)) {
+		wp_send_json_error('Invalid preset', 400);
+	}
+
+	#TODO:Edit this later with database entry
+	set_transient('wp_minimizer_preset_' . $post_id, $preset, HOUR_IN_SECONDS);
+	wp_send_json_success();
+});
+
+
+
+/* Chooses which preset to use based of transient,  TODO: Change from transient to database entries */
 function wpdocs_allowed_block_types($block_editor_context, $editor_context) {
 	global $slim, $medium;
 	if (! empty($editor_context->post)) {
-		switch (preset) {
-			case 0:
+		#Fetches previously stored preset.
+		$preset = get_transient('wp_minimizer_preset_' . $editor_context->post->ID);
+		
+		switch ($preset) {
+			case 'slim':
 				return $slim;
-			case 1:
+			case 'medium':
 				return $medium;
+			case 'full':
+				return $block_editor_context;
 			default:
 				return $block_editor_context;
 		}
@@ -74,3 +104,7 @@ function wpdocs_allowed_block_types($block_editor_context, $editor_context) {
 }
 
 add_filter( 'allowed_block_types_all', 'wpdocs_allowed_block_types', 10, 2 );
+
+
+
+
