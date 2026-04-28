@@ -13,6 +13,9 @@
  * @package CreateBlock
  */
 
+//variable for possible preset with no blocks
+$zero = false;
+
 $slim = array(
 			'core/paragraph',
 			'core/heading',
@@ -37,6 +40,11 @@ $medium = array(
 			'core/accordion',
 			'core/buttons',
             'core/site-logo',
+            'core/quote',
+            'core/details',
+            'core/math',
+            'core/columns',
+            'core/embed',
 		);
 
 $full = true;
@@ -84,7 +92,7 @@ add_action('wp_ajax_wp_minimizer_set_preset', function() {
 
 /* Chooses which preset to use based of transient,  TODO: Change from transient to database entries */
 function wpdocs_allowed_block_types($block_editor_context, $editor_context) {
-	global $slim, $medium;
+	global $slim, $medium, $full;
 	if (! empty($editor_context->post)) {
 		#Fetches previously stored preset.
 		$preset = get_transient('wp_minimizer_preset_' . $editor_context->post->ID);
