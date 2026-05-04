@@ -81,8 +81,16 @@ function dummy(preset: string) : string {
 }
 
 export default function VerticalToggleButtons() {
-  const currentPreset: string = dummy('medium');
-  const [view, setView] = React.useState(currentPreset);
+  
+    const activePreset = async () => {
+      const form = new FormData();
+      form.append('action', 'wp_minimizer_get_preset');
+      await fetch(window.myPluginData.ajaxUrl, { method: 'GET'});
+  
+    };
+
+  
+  const [view, setView] = React.useState(activePreset);
   const postId = useSelect(select => select('core/editor').getCurrentPostId());
 
 
