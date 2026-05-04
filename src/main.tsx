@@ -8,7 +8,7 @@ registerPlugin('my-plugin-sidebar', {
         <PluginSidebar
             name="my-plugin-sidebar"
             icon="beer"
-            title="My plugin sidebar"
+            title="WordPress Minimizer"
         >
             <VerticalToggleButtons />
         </PluginSidebar>
