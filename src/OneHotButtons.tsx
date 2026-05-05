@@ -114,19 +114,19 @@ export default function VerticalToggleButtons(props) {
         <ToggleButton value="slim" aria-label="slim" color="secondary">
           <div style={buttonDiv}>
             <BrushIcon style={{width: '10%', fontSize: '1.75rem', color: view == "slim" ? 'white' : '' }}/>
-            <div style={{width: '90%', fontSize: '1rem', paddingLeft: '5%', display: 'flex', textTransform: 'capitalize', color:  view == "slim" ? 'white' : ''}}>Basic Management</div>
+            <div style={{width: '90%', fontSize: '1rem', paddingLeft: '5%', display: 'flex', textTransform: 'capitalize', color:  view == "slim" ? 'white' : ''}}>Slim</div>
           </div>
         </ToggleButton>
         <ToggleButton value="medium" aria-label="medium" color="secondary">
           <div style={buttonDiv}>
             <ViewQuiltIcon style={{width: '10%', fontSize: '1.75rem', color: view == "medium" ? 'white' : ''}}/>
-            <div style={{width: '90%', fontSize: '1rem', paddingLeft: '5%', display: 'flex', textTransform: 'capitalize', color: view == "medium" ? 'white' : ''}}>Page Design</div>
+            <div style={{width: '90%', fontSize: '1rem', paddingLeft: '5%', display: 'flex', textTransform: 'capitalize', color: view == "medium" ? 'white' : ''}}>Medium</div>
           </div>
         </ToggleButton>
         <ToggleButton value="full" aria-label="full" color="secondary">
           <div style={buttonDiv}>
             <ArchitectureIcon style={{width: '10%', fontSize: '1.75rem', color: view == "full" ? 'white' : ''}}/>
-            <div style={{width: '90%', fontSize: '1rem', paddingLeft: '5%', display: 'flex', textTransform: 'capitalize', color: view == "full" ? 'white' : ''}}>Unrestricted Editing</div>
+            <div style={{width: '90%', fontSize: '1rem', paddingLeft: '5%', display: 'flex', textTransform: 'capitalize', color: view == "full" ? 'white' : ''}}>Full</div>
           </div>
         </ToggleButton>
       </ToggleButtonGroup>

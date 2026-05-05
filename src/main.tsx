@@ -11,7 +11,8 @@ registerPlugin('my-plugin-sidebar', {
             icon="beer"
             title="WordPress Minimizer"
         >
-            
+            <div style={{paddingTop: "5%", paddingBottom: "5%", paddingLeft: "5%", paddingRight: "5%", fontSize: "1rem"}}>
+                Choosing mode changes which blocks are shown in the block editor.</div>
             <VerticalToggleButtons preset={window.minimizer.preset as string} />
         </PluginSidebar>
     ),
