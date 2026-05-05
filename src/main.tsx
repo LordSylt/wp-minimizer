@@ -1,5 +1,6 @@
 import VerticalToggleButtons from "./OneHotButtons";
 
+
 const { registerPlugin } = wp.plugins;
 const { PluginSidebar } = wp.editPost;
 
@@ -10,7 +11,8 @@ registerPlugin('my-plugin-sidebar', {
             icon="beer"
             title="WordPress Minimizer"
         >
-            <VerticalToggleButtons />
+            
+            <VerticalToggleButtons preset={window.minimizer.preset as string} />
         </PluginSidebar>
     ),
 });

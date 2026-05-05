@@ -78,11 +78,17 @@ function sidebar_plugin_register() {
 add_action( 'init', 'sidebar_plugin_register' );
 
 function sidebar_plugin_script_enqueue() {
+	global $wpdb;
     wp_enqueue_script( 'minimizer-sidebar' );
 
-	wp_localize_script('minimizer-sidebar', 'myPluginData', [
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('wp_minimizer_nonce'),
+	$user_id = get_current_user_id();
+	$preset = $wpdb->get_results("SELECT editor_state FROM wp_users WHERE ID = $user_id");
+	$preset = $preset[0]->editor_state;
+
+	wp_localize_script('minimizer-sidebar', 'minimizer', [
+        'ajaxUrl' 	=> admin_url('admin-ajax.php'),
+        'nonce'   	=> wp_create_nonce('wp_minimizer_nonce'),
+		'preset'	=> $preset,
     ]);
 }
 add_action( 'enqueue_block_editor_assets', 'sidebar_plugin_script_enqueue' );
@@ -111,25 +117,6 @@ add_action('wp_ajax_wp_minimizer_set_preset', function() {
 	wp_send_json_success();
 });
 
-
-add_action('wp_ajax_wp_minimizer_get_preset', function() {
-	global $wpdb;
-	check_ajax_referer('wp_minimizer_nonce', 'nonce');
-	if (!current_user_can('edit_posts')) {
-		wp_send_json_error('Unauthorized', 403);
-	}
-
-	$user_id = get_current_user_id();
-
-	$preset = $wpdb->get_results("SELECT editor_state FROM wp_users WHERE ID = $user_id");
-	if (!$preset) {
-		wp_send_json_error("No preset", 400);
-	}
-	$preset = $preset[0]->editor_state;
-
-	//TODO: fix this
-	wp_send_json($preset, 200);
-});
 
 
 /**

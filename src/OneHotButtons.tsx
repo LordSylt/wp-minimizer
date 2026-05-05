@@ -76,22 +76,9 @@ const theme = createTheme({
   },
 });
 
-function dummy(preset: string) : string {
-  return preset;
-}
 
-export default function VerticalToggleButtons() {
-  
-    const activePreset = async () => {
-      const form = new FormData();
-      form.append('action', 'wp_minimizer_get_preset');
-      await fetch(window.myPluginData.ajaxUrl, { method: 'GET'});
-  
-    };
-
-  
-  const [view, setView] = React.useState(activePreset);
-  const postId = useSelect(select => select('core/editor').getCurrentPostId());
+export default function VerticalToggleButtons(props) { 
+  const [view, setView] = React.useState(props.preset);
 
 
   const handleChange = async (_: React.MouseEvent<HTMLElement>, nextView: string) => {
@@ -100,10 +87,9 @@ export default function VerticalToggleButtons() {
 
         const form = new FormData();
         form.append('action', 'wp_minimizer_set_preset');
-        form.append('nonce', window.myPluginData.nonce);
+        form.append('nonce', window.minimizer.nonce);
         form.append('value', nextView);
-        form.append('post_id', postId);
-        await fetch(window.myPluginData.ajaxUrl, { method: 'POST', body: form });
+        await fetch(window.minimizer.ajaxUrl, { method: 'POST', body: form });
         //Maybe check fetch value before reload?
         window.location.reload(); 
   };
