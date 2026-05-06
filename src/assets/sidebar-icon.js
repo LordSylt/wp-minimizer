@@ -1,6 +1,6 @@
 const CustomSidebarIcon = () => (
 	<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-	 width="24" height="24" viewBox="0 0 1254.000000 1254.000000"
+	 width="24" height="24" viewBox="100 100 1054.000000 1054.000000"
 	 preserveAspectRatio="xMidYMid meet">
 
 	<g transform="translate(0.000000,1254.000000) scale(0.100000,-0.100000)"
