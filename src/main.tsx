@@ -1,4 +1,5 @@
 import VerticalToggleButtons from "./OneHotButtons";
+import custom_sidebar_icon from "./assets/sidebar-icon.js";
 
 
 const { registerPlugin } = wp.plugins;
@@ -8,7 +9,7 @@ registerPlugin('my-plugin-sidebar', {
     render: () => (
         <PluginSidebar
             name="my-plugin-sidebar"
-            icon="beer"
+            icon={ < custom_sidebar_icon /> }
             title="WordPress Minimizer"
         >
             <div style={{paddingTop: "5%", paddingBottom: "5%", paddingLeft: "5%", paddingRight: "5%", fontSize: "1rem"}}>
