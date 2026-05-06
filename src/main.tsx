@@ -1,31 +1,20 @@
-//import { StrictMode } from 'react'
-//import { createRoot } from 'react-dom/client'
-//import './index.css'
-//import App from './App.tsx'
-//
-//createRoot(document.getElementById('root')!).render(
-//  <StrictMode>
-//    <App />
-//  </StrictMode>,
-//)
-//import VerticalToggleButtons from "./OneHoteButtons";
+import VerticalToggleButtons from "./OneHotButtons";
+import CustomSidebarIcon from "./assets/sidebar-icon.js";
 
-( function ( wp, React ) {
-    var el = React.createElement;
-    var registerPlugin = wp.plugins.registerPlugin;
-    var PluginSidebar = wp.editor.PluginSidebar;
 
-    registerPlugin( 'my-plugin-sidebar', {
-        render: function () {
-            return el(
-                PluginSidebar,
-                {
-                    name: 'my-plugin-sidebar',
-                    icon: 'admin-post',
-                    title: 'My plugin sidebar',
-                },
-				'Meta field',
-            );
-        },
-    } );
-} )( (window as any).wp, window.React );
+const { registerPlugin } = wp.plugins;
+const { PluginSidebar } = wp.editPost;
+
+registerPlugin('my-plugin-sidebar', {
+    render: () => (
+        <PluginSidebar
+            name="my-plugin-sidebar"
+            icon={ < CustomSidebarIcon /> }
+            title="WordPress Minimizer"
+        >
+            <div style={{paddingTop: "5%", paddingBottom: "5%", paddingLeft: "5%", paddingRight: "5%", fontSize: "1rem"}}>
+                Choosing mode changes which blocks are shown in the block editor.</div>
+            <VerticalToggleButtons preset={window.minimizer.preset as string} />
+        </PluginSidebar>
+    ),
+});
