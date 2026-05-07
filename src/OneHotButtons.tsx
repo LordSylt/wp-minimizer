@@ -89,9 +89,14 @@ export default function VerticalToggleButtons(props) {
         form.append('action', 'wp_minimizer_set_preset');
         form.append('nonce', window.minimizer.nonce);
         form.append('value', nextView);
-        await fetch(window.minimizer.ajaxUrl, { method: 'POST', body: form });
-        //Maybe check fetch value before reload?
-        window.location.reload(); 
+
+        const response = await fetch(window.minimizer.ajaxUrl, { method: 'POST', body: form });
+        const result = await response.json();
+
+        //Now checks for response
+        if (result.success) {
+          window.location.reload();
+        }
   };
 
   const buttonDiv : React.CSSProperties = {
