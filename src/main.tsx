@@ -36,4 +36,17 @@ wp.domReady(() => {
         dispatch('core/edit-post').setIsInserterOpened(true);
         dispatch('core/edit-post').openGeneralSidebar('wp-minimizer/minimizer-sidebar');
     });
+
+    //Register and unregister based of whitelist variable
+    if (window.minimizer.whitelist != true) {
+        wp.blocks.getBlockTypes()
+            .filter( block => ! window.minimizer.whitelist.includes( block.name ))
+            .forEach( block => {
+                wp.blocks.unregisterBlockType( block.name )
+                wp.blocks.registerBlockType( block.name, {
+                    ...block,
+                    supports: { ...block.supports, inserter: false }
+                });
+        });
+    }
 });

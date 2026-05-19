@@ -19,38 +19,40 @@ function logToConsole($message)
     echo "<script>console.log('" . json_encode($message) . "');</script>";
 }
 
-$slim = [
-    "core/paragraph",
-    "core/heading",
-    "core/list",
-    "core/table",
-    "core/image",
-    "core/file",
-    "core/video",
-    "core/accordion",
-    "core/buttons",
-    "core/site-logo",
-];
+$presets = [
+    "slim" => [
+        "core/paragraph",
+        "core/heading",
+        "core/list",
+        "core/table",
+        "core/image",
+        "core/file",
+        "core/video",
+        "core/accordion",
+        "core/buttons",
+        "core/site-logo",
+    ],
 
-$medium = [
-    "core/paragraph",
-    "core/heading",
-    "core/list",
-    "core/table",
-    "core/image",
-    "core/file",
-    "core/video",
-    "core/accordion",
-    "core/buttons",
-    "core/site-logo",
-    "core/quote",
-    "core/details",
-    "core/math",
-    "core/columns",
-    "core/embed",
-];
+    "medium" => [
+        "core/paragraph",
+        "core/heading",
+        "core/list",
+        "core/table",
+        "core/image",
+        "core/file",
+        "core/video",
+        "core/accordion",
+        "core/buttons",
+        "core/site-logo",
+        "core/quote",
+        "core/details",
+        "core/math",
+        "core/columns",
+        "core/embed",
+    ],
 
-$full = true;
+    "full" => true,
+];
 
 /**
  * Initializes necessary database columns on startup if needed
@@ -82,7 +84,7 @@ add_action("init", "sidebar_plugin_register");
 
 function sidebar_plugin_script_enqueue()
 {
-    global $wpdb;
+    global $wpdb, $presets;
     wp_enqueue_script("minimizer-sidebar");
 
     $user_id = get_current_user_id();
@@ -95,6 +97,7 @@ function sidebar_plugin_script_enqueue()
         "ajaxUrl" => admin_url("admin-ajax.php"),
         "nonce" => wp_create_nonce("wp_minimizer_nonce"),
         "preset" => $preset,
+        "whitelist" => $presets[$preset],
     ]);
 }
 add_action("enqueue_block_editor_assets", "sidebar_plugin_script_enqueue");
@@ -133,7 +136,7 @@ add_action("wp_ajax_wp_minimizer_set_preset", function () {
  */
 function wpdocs_allowed_block_types($block_editor_context, $editor_context)
 {
-    global $slim, $medium, $full, $wpdb;
+    global $presets, $wpdb;
     if (!empty($editor_context->post)) {
         #Fetches previously stored preset.
         $user_id = get_current_user_id();
@@ -145,18 +148,9 @@ function wpdocs_allowed_block_types($block_editor_context, $editor_context)
         }
         $preset = $preset[0]->editor_state;
 
-        switch ($preset) {
-            case "slim":
-                return $slim;
-            case "medium":
-                return $medium;
-            case "full":
-                return $full;
-            default:
-                return $block_editor_context;
-        }
+        return $presets[$preset];
     }
     return $block_editor_context;
 }
 
-add_filter("allowed_block_types_all", "wpdocs_allowed_block_types", 10, 2);
+/* add_filter("allowed_block_types_all", "wpdocs_allowed_block_types", 10, 2); */
