@@ -95,7 +95,32 @@ export default function VerticalToggleButtons(props) {
 
         //Now checks for response
         if (result.success) {
-          window.location.reload();
+
+          
+          const preset = window.minimizer.presets[nextView];
+
+          //Going from a more restrictive to less requires this part
+          wp.blocks.getBlockTypes()
+              .forEach( block => {
+                  wp.blocks.unregisterBlockType( block.name )
+                  wp.blocks.registerBlockType( block.name, {
+                      ...block,
+                      supports: { ...block.supports, inserter: true }
+                  });
+          });
+          
+          const ifPresetNotFull = preset != true; 
+          if (ifPresetNotFull) {
+              wp.blocks.getBlockTypes()
+                  .filter( block => ! preset.includes( block.name ))
+                  .forEach( block => {
+                      wp.blocks.unregisterBlockType( block.name )
+                      wp.blocks.registerBlockType( block.name, {
+                          ...block,
+                          supports: { ...block.supports, inserter: false }
+                      });
+              });
+          }
         }
   };
 

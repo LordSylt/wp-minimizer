@@ -96,8 +96,8 @@ function sidebar_plugin_script_enqueue()
     wp_localize_script("minimizer-sidebar", "minimizer", [
         "ajaxUrl" => admin_url("admin-ajax.php"),
         "nonce" => wp_create_nonce("wp_minimizer_nonce"),
-        "preset" => $preset,
-        "whitelist" => $presets[$preset],
+        "presets" => $presets,
+        "current_preset" => $preset,
     ]);
 }
 add_action("enqueue_block_editor_assets", "sidebar_plugin_script_enqueue");
