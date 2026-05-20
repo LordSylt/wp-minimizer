@@ -6,9 +6,9 @@ The plugin is made as part of a project for a client and is thus aimed primarily
 To get up and running the recommended way is to download and set up a local wordpress with localwp, then clone this repository into the folder at 'app/public/wp-content/plugins/'. 
 
 ## Required tools
-editor - VSCode (recommended)
-npm - Node Package Manager
-git - (not necessary but highly recommended)
+* editor - VSCode (recommended)
+* npm - Node Package Manager
+* git - (not necessary but highly recommended)
 
 ## npm packages
 These packages are required to have and can be installed with: 'npm install "package name"'
