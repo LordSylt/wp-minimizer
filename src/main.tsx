@@ -1,6 +1,7 @@
 /*
  * Custom entry point for wordpress
 */
+import * as React from 'react';
 import VerticalToggleButtons from "./OneHotButtons";
 import CustomSidebarIcon from "./assets/sidebar-icon.js";
 
@@ -14,7 +15,10 @@ const { PluginSidebar } = wp.editor;
 
 // const [currentPreset, setCurrentPreset] = React.useState();
 registerPlugin('wp-minimizer', {
-    render: () => (
+    render: () => {
+        const [currentPreset, setCurrentPreset] = React.useState(window.minimizer.current_preset as string);
+
+        return(
         <PluginSidebar
             name="minimizer-sidebar"
             icon={ < CustomSidebarIcon /> }
@@ -22,9 +26,9 @@ registerPlugin('wp-minimizer', {
         >
             <div style={{paddingTop: "5%", paddingBottom: "5%", paddingLeft: "5%", paddingRight: "5%", fontSize: "1rem"}}>
                 Choosing mode changes which blocks are shown in the block editor.</div>
-            <VerticalToggleButtons preset={window.minimizer.current_preset as string}   />
+            <VerticalToggleButtons preset={currentPreset} setPreset={setCurrentPreset}/>
         </PluginSidebar>
-    ),
+    )},
 });
 
 wp.domReady(() => {

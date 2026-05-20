@@ -84,6 +84,7 @@ export default function VerticalToggleButtons(props) {
   const handleChange = async (_: React.MouseEvent<HTMLElement>, nextView: string) => {
         if (!nextView) return; // MUI returns null if you click the already-selected button
         setView(nextView);
+        props.setPreset(nextView);
 
         const form = new FormData();
         form.append('action', 'wp_minimizer_set_preset');
