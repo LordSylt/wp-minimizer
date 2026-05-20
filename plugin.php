@@ -128,29 +128,3 @@ add_action("wp_ajax_wp_minimizer_set_preset", function () {
     }
     wp_send_json_success();
 });
-
-/**
- * Fetches preset from db and applies it
- * @param mixed $block_editor_context
- * @param mixed $editor_context
- */
-function wpdocs_allowed_block_types($block_editor_context, $editor_context)
-{
-    global $presets, $wpdb;
-    if (!empty($editor_context->post)) {
-        #Fetches previously stored preset.
-        $user_id = get_current_user_id();
-        $preset = $wpdb->get_results(
-            "SELECT editor_state FROM wp_users WHERE ID = $user_id"
-        );
-        if (!$preset) {
-            return $block_editor_context;
-        }
-        $preset = $preset[0]->editor_state;
-
-        return $presets[$preset];
-    }
-    return $block_editor_context;
-}
-
-/* add_filter("allowed_block_types_all", "wpdocs_allowed_block_types", 10, 2); */

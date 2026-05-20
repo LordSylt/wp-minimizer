@@ -42,15 +42,17 @@ wp.domReady(() => {
     //Keeps patterns visible even if containing unlisted variables
     const currentPreset = window.minimizer.current_preset;
     const preset = window.minimizer.presets[currentPreset];
-    if (preset != true) {
-        wp.blocks.getBlockTypes()
-            .filter( block => ! preset.includes( block.name ))
-            .forEach( block => {
-                wp.blocks.unregisterBlockType( block.name )
-                wp.blocks.registerBlockType( block.name, {
-                    ...block,
-                    supports: { ...block.supports, inserter: false }
-                });
-        });
-    }
+
+    const PresetIsFull = preset == true; 
+    if (PresetIsFull) return;
+
+    wp.blocks.getBlockTypes()
+        .filter( block => ! preset.includes( block.name ))
+        .forEach( block => {
+            wp.blocks.unregisterBlockType( block.name )
+            wp.blocks.registerBlockType( block.name, {
+                ...block,
+                supports: { ...block.supports, inserter: false }
+            });
+    });
 });
