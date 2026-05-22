@@ -1,73 +1,33 @@
-# React + TypeScript + Vite
+# Intro
+This file aims to help you set up a working environment for further development of this wordpress plugin.
+The plugin is made as part of a project for a client and is thus aimed primarily to help them develop it further if necessary.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Setup
+To get up and running the recommended way is to download and set up a local wordpress with localwp, then clone this repository into the folder at 'app/public/wp-content/plugins/'. 
 
-Currently, two official plugins are available:
+## Required tools
+* editor - VSCode (recommended)
+* npm - Node Package Manager
+* git - (not necessary but highly recommended)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## npm packages
+These packages are required to have and can be installed with: 'npm install "package name"'
+* @wordpress/scripts
+* tsx
+* mui (unsure if this is package name)
 
-## React Compiler
+# Development
+To compile the code and test it on localwp one simply builds the program with: 'npm run build'
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Files and what they do
+The plugin is developed in these files: 
+* plugin.php
+* build/OneHotButtons.tsx
+* build/main.tsx
 
-## Expanding the ESLint configuration
+the .php file handles working with wordpress directly while anything in the .tsx files must go through the .php file if need be to access wordpress directly. The .tsx files are mostly for how the buttons look and function within the editor.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting the program to the server
+To get the plugin working on the actual website one should build the program and then take the files created in the 'build' directory aswell as the plugin.php file in the standard directory and place them in the 'wp-minimizer' folder on the corresponding server (hostinger). 
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```

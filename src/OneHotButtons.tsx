@@ -84,6 +84,7 @@ export default function VerticalToggleButtons(props) {
   const handleChange = async (_: React.MouseEvent<HTMLElement>, nextView: string) => {
         if (!nextView) return; // MUI returns null if you click the already-selected button
         setView(nextView);
+        props.setPreset(nextView);
 
         const form = new FormData();
         form.append('action', 'wp_minimizer_set_preset');
@@ -93,10 +94,32 @@ export default function VerticalToggleButtons(props) {
         const response = await fetch(window.minimizer.ajaxUrl, { method: 'POST', body: form });
         const result = await response.json();
 
-        //Now checks for response
-        if (result.success) {
-          window.location.reload();
-        }
+        if (!result.success) return;
+        
+        const preset = window.minimizer.presets[nextView];
+
+        //Going from a more restrictive to less requires this part
+        wp.blocks.getBlockTypes()
+            .forEach( block => {
+                wp.blocks.unregisterBlockType( block.name )
+                wp.blocks.registerBlockType( block.name, {
+                    ...block,
+                    supports: { ...block.supports, inserter: true }
+                });
+        });
+        
+        const PresetIsFull = preset == true; 
+        if (PresetIsFull) return;
+
+        wp.blocks.getBlockTypes()
+            .filter( block => ! preset.includes( block.name ))
+            .forEach( block => {
+                wp.blocks.unregisterBlockType( block.name )
+                wp.blocks.registerBlockType( block.name, {
+                    ...block,
+                    supports: { ...block.supports, inserter: false }
+                });
+        });
   };
 
   const buttonDiv : React.CSSProperties = {
